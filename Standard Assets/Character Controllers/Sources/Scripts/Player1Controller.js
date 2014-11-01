@@ -228,7 +228,7 @@ function aroundPlayer(axisV,axisH){
 	var hitColliders= Physics.OverlapSphere(transform.position,(Mathf.Abs(axisV)+Mathf.Abs(axisH))*radius);
 	
 	for(var i=0;i<hitColliders.Length; i++){
-		Debug.Log(hitColliders[i].name);
+		//Debug.Log(hitColliders[i].name);
 		//hitColliders[i].SendMessage();
 	}
 }
