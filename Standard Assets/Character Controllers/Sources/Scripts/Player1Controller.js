@@ -132,6 +132,10 @@ function UpdateSmoothedMovementDirection ()
 
 	var v = Input.GetAxisRaw("Vertical1");
 	var h = Input.GetAxisRaw("Horizontal1");
+	
+	//Debug.Log(v+" ; "+h);
+	aroundPlayer(v,h);
+	
 
 	// Are we moving backwards or looking backwards
 	if (v < -0.2)
@@ -217,6 +221,16 @@ function UpdateSmoothedMovementDirection ()
 	
 
 		
+}
+
+function aroundPlayer(axisV,axisH){
+	var radius= 5;
+	var hitColliders= Physics.OverlapSphere(transform.position,(Mathf.Abs(axisV)+Mathf.Abs(axisH))*radius);
+	
+	for(var i=0;i<hitColliders.Length; i++){
+		Debug.Log(hitColliders[i].name);
+		//hitColliders[i].SendMessage();
+	}
 }
 
 
