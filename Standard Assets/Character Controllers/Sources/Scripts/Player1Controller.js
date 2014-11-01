@@ -13,9 +13,13 @@ public var runMaxAnimationSpeed : float = 1.0;
 public var jumpAnimationSpeed : float = 1.15;
 public var landAnimationSpeed : float = 1.0;
 
+public var step : float = 1.0;
+
 private var _animation : Animation;
 
 private var _characterState : CharacterState;
+
+private var previousPosition;
 
 // The speed when walking
 var walkSpeed = 2.0;
@@ -84,6 +88,7 @@ private var isControllable = true;
 
 function Awake ()
 {
+	previousPosition = transform.position;
 	moveDirection = transform.TransformDirection(Vector3.forward);
 	
 	_animation = GetComponent(Animation);
@@ -121,6 +126,7 @@ function UpdateSmoothedMovementDirection ()
 	var cameraTransform = Camera.main.transform;
 	var grounded = IsGrounded();
 	
+	
 	// Forward vector relative to the camera along the x-z plane	
 	var forward = cameraTransform.TransformDirection(Vector3.forward);
 	forward.y = 0;
@@ -133,8 +139,11 @@ function UpdateSmoothedMovementDirection ()
 	var v = Input.GetAxisRaw("Vertical1");
 	var h = Input.GetAxisRaw("Horizontal1");
 	
-	//Debug.Log(v+" ; "+h);
-	aroundPlayer(v,h);
+	if(Vector3.Distance(previousPosition,transform.position) >= step){
+		previousPosition = transform.position;
+		aroundPlayer(v,h);
+	}
+	
 	
 
 	// Are we moving backwards or looking backwards
