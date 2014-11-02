@@ -246,7 +246,10 @@ function aroundPlayer(axisV,axisH){
 	
 	for(var i=0;i<hitColliders.Length; i++){
 		//Debug.Log(hitColliders[i].name);
-		hitColliders[i].SendMessage("Damage", 10);
+		if (hitColliders[i].tag == "IceCube")
+		{
+			hitColliders[i].SendMessage("Damage", 10);
+		}
 	}
 }
 

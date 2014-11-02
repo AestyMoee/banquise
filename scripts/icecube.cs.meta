@@ -2,7 +2,9 @@ fileFormatVersion: 2
 guid: eb23e00c55d9b074a8fe74467cf8b584
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - CrackFragilePrefab: {fileID: 100000, guid: 4d2da77844ce26246b1430a81d82708f, type: 2}
+  - CrackMoyenPrefab: {fileID: 100000, guid: 9aab123a4dda5b8448916517dfaec0ee, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

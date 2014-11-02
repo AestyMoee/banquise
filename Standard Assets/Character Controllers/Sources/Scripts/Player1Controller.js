@@ -245,8 +245,11 @@ function aroundPlayer(axisV,axisH){
 	var hitColliders= Physics.OverlapSphere(transform.position,(Mathf.Abs(axisV)+Mathf.Abs(axisH))*radius);
 	
 	for(var i=0;i<hitColliders.Length; i++){
-		Debug.Log(hitColliders[i].name);
-		//hitColliders[i].SendMessage();
+		//Debug.Log(hitColliders[i].name);
+		if (hitColliders[i].tag == "IceCube")
+		{
+			hitColliders[i].SendMessage("Damage", 10);
+		}
 	}
 }
 
@@ -443,7 +446,7 @@ function GetLockCameraTimer ()
 
 function IsMoving ()  : boolean
 {
-	return Mathf.Abs(Input.GetAxisRaw("Vertical1")) + Mathf.Abs(Input.GetAxisRaw("Horizontal1")) > 0.5;
+	return Mathf.Abs(Input.GetAxisRaw("")) + Mathf.Abs(Input.GetAxisRaw("Horizontal1")) > 0.5;
 }
 
 function HasJumpReachedApex ()
