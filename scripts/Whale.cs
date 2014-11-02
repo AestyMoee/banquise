@@ -18,5 +18,9 @@ public class Whale : MonoBehaviour {
 	void Update()
 	{
 		Playing = WhaleAnimation.isPlaying;
+		if (!WhaleAnimation.isPlaying)
+		{
+			gameObject.renderer.enabled = false;
+		}
 	}
 }

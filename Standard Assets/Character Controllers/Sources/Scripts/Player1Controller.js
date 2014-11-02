@@ -19,8 +19,6 @@ private var _animation : Animation;
 
 private var _characterState : CharacterState;
 
-private var previousPosition;
-
 // The speed when walking
 var walkSpeed = 2.0;
 // after trotAfterSeconds of walking we trot with trotSpeed
@@ -86,9 +84,15 @@ private var lastGroundedTime = 0.0;
 
 private var isControllable = true;
 
+private var previousPos;
+
+function Start(){
+	previousPos = new Vector2(transform.position.x,transform.position.z);
+}
+
 function Awake ()
 {
-	previousPosition = transform.position;
+	
 	moveDirection = transform.TransformDirection(Vector3.forward);
 	
 	_animation = GetComponent(Animation);
@@ -126,7 +130,6 @@ function UpdateSmoothedMovementDirection ()
 	var cameraTransform = Camera.main.transform;
 	var grounded = IsGrounded();
 	
-	
 	// Forward vector relative to the camera along the x-z plane	
 	var forward = cameraTransform.TransformDirection(Vector3.forward);
 	forward.y = 0;
@@ -139,11 +142,16 @@ function UpdateSmoothedMovementDirection ()
 	var v = Input.GetAxisRaw("Vertical1");
 	var h = Input.GetAxisRaw("Horizontal1");
 	
-	if(Vector3.Distance(previousPosition,transform.position) >= step){
-		previousPosition = transform.position;
+	
+	var actualPos = new Vector2(transform.position.x,transform.position.z);
+	//Debug.Log(Vector3.Distance(previousPos,Vector2.Vector2(transform.position)));
+	//Debug.Log("Position = " + actualPos + " ; Previous = " + previousPos);
+	
+	if(Vector2.Distance(previousPos, actualPos) >= step)
+	{
+		previousPos = actualPos;
 		aroundPlayer(v,h);
 	}
-	
 	
 
 	// Are we moving backwards or looking backwards
@@ -237,7 +245,7 @@ function aroundPlayer(axisV,axisH){
 	var hitColliders= Physics.OverlapSphere(transform.position,(Mathf.Abs(axisV)+Mathf.Abs(axisH))*radius);
 	
 	for(var i=0;i<hitColliders.Length; i++){
-		//Debug.Log(hitColliders[i].name);
+		Debug.Log(hitColliders[i].name);
 		//hitColliders[i].SendMessage();
 	}
 }

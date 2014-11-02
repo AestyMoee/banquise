@@ -13,6 +13,8 @@ public var runMaxAnimationSpeed : float = 1.0;
 public var jumpAnimationSpeed : float = 1.15;
 public var landAnimationSpeed : float = 1.0;
 
+public var step : float = 1.0;
+
 private var _animation : Animation;
 
 private var _characterState : CharacterState;
@@ -82,8 +84,15 @@ private var lastGroundedTime = 0.0;
 
 private var isControllable = true;
 
+private var previousPos;
+
+function Start(){
+	previousPos = new Vector2(transform.position.x,transform.position.z);
+}
+
 function Awake ()
 {
+	
 	moveDirection = transform.TransformDirection(Vector3.forward);
 	
 	_animation = GetComponent(Animation);
@@ -132,6 +141,18 @@ function UpdateSmoothedMovementDirection ()
 
 	var v = Input.GetAxisRaw("Vertical2");
 	var h = Input.GetAxisRaw("Horizontal2");
+	
+	
+	var actualPos = new Vector2(transform.position.x,transform.position.z);
+	//Debug.Log(Vector3.Distance(previousPos,Vector2.Vector2(transform.position)));
+	//Debug.Log("Position = " + actualPos + " ; Previous = " + previousPos);
+	
+	if(Vector2.Distance(previousPos, actualPos) >= step)
+	{
+		previousPos = actualPos;
+		aroundPlayer(v,h);
+	}
+	
 
 	// Are we moving backwards or looking backwards
 	if (v < -0.2)
@@ -217,6 +238,16 @@ function UpdateSmoothedMovementDirection ()
 	
 
 		
+}
+
+function aroundPlayer(axisV,axisH){
+	var radius= 5;
+	var hitColliders= Physics.OverlapSphere(transform.position,(Mathf.Abs(axisV)+Mathf.Abs(axisH))*radius);
+	
+	for(var i=0;i<hitColliders.Length; i++){
+		//Debug.Log(hitColliders[i].name);
+		hitColliders[i].SendMessage("Damage", 10);
+	}
 }
 
 

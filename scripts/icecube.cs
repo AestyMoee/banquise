@@ -12,11 +12,12 @@ public enum EIceCubeHP
 
 public class IceCube : MonoBehaviour {
 
+	public int CurrentHP;
 	public EIceCubeHP HealthPoints;
 
 	private Vector3 SinkVector;
-	private const float SinkSpeed = 1;
-	private const float RotateSpeed = 1;
+	private const float SinkSpeed = 0.1f;
+	private const float RotateSpeed = 0.1f;
 
 	protected void Start()
 	{
@@ -25,6 +26,7 @@ public class IceCube : MonoBehaviour {
 
 	public void Damage(int hp)
 	{
+		//Debug.Log("Message received : param = " + hp);
 		HealthPoints -= hp;
 	}
 
@@ -36,12 +38,13 @@ public class IceCube : MonoBehaviour {
 	// Fait couler le bloc
 	private void Sink(float deltaTime)
 	{
-		transform.Rotate (SinkVector * (RotateSpeed * deltaTime));
-		transform.Translate (Vector3.down * (SinkSpeed * deltaTime));
+		gameObject.transform.Rotate (SinkVector * (RotateSpeed * deltaTime));
+		gameObject.transform.Translate (Vector3.down*10 * (SinkSpeed * deltaTime));
 	}
 
 	protected void Update()
 	{
+		CurrentHP = (int)HealthPoints;
 		if (HealthPoints <= 0) 
 		{
 			Sink(Time.deltaTime);
